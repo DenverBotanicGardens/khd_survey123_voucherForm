@@ -24,8 +24,8 @@ function terrainAdmin(terrain, terrain_other) {
     } else if (terrainStr == 'other'){
         return `Terrain: ${terrain_other}.`
     } else if (terrain && terrainStr.includes('other')){
-        terrainStr = terrainStr.replace(/other/g,'')
-        return `Terrain: ${terrainStr}, ${terrain_other}.`
+        terrainStr = terrainStr.replace(/other, /g,'').replace(/other,/g,'').replace(/other/g,'').replace(/,other/g,'')
+        return `Terrain: ${terrainStr} ${terrain_other}.`
     } else {
         return ''
     }
@@ -86,8 +86,8 @@ function habitAdmin(habit, habit_other){
     } else if (habitStr == 'other'){
         return `Habit: ${habit_other}.`
     } else if (habit && habitStr.includes('other')){
-        habitStr = habitStr.replace(/other/g,'')
-        return `Habit: ${habitStr}, ${habit_other}.`
+        habitStr = habitStr.replace(/other, /g,'').replace(/other,/g,'').replace(/other/g,'').replace(/,other/g,'')
+        return `Habit: ${habitStr} ${habit_other}.`
     } else {
         return ''
     }
@@ -180,3 +180,79 @@ function disturbancesAdmin(disturbance,disturbance_other){
         return ''
     }
 }
+
+//SLOPE
+//pulldata("@javascript", "voucherScripts.js", "slopeAdmin", ${<slope>})
+function slopeAdmin(slope){
+    if (slope) {
+        return `Estimated slope in degrees: ${slope}.`
+    } else {
+        return ''
+    }
+}
+
+//ASPECT
+//pulldata("@javascript", "voucherScripts.js", "aspectAdmin", ${<aspect>})
+function aspectAdmin(aspect){
+    if (aspect) {
+        return `Slope aspect: ${aspect}.`
+    } else {
+        return ''
+    }
+}
+
+
+//HABITAT COLLATE
+//collates all habitat descriptors into DwC field 'habitat'
+function habitatCollate(habitatTypeAdmin,disturbancesAdmin,terrainAdmin,microHabitatAdmin,soilAdmin,slopeAdmin,aspectAdmin){
+    var habitatString = `${habitatTypeAdmin} ${disturbancesAdmin} ${terrainAdmin} ${microHabitatAdmin} ${soilAdmin} ${slopeAdmin} ${aspectAdmin}`
+    return habitatString.replace(/  /g,' ')
+}
+
+
+
+
+//MATERIAL SAMPLE for symbiota
+
+//materialSample-sampleType
+//pulldata("@javascript", "voucherScripts.js", "matSamType", ${<tissueSample>})
+function matSampType(tissueSample){
+    if (tissueSample == 'yes'){
+        return 'tissue'
+    } else{
+        return ''
+    }
+}
+
+
+//materialSample-disposition
+//pulldata("@javascript", "voucherScripts.js", "matSampDisposition", ${<tissueSample>})
+function matSampDisposition(tissueSample){
+    if (tissueSample == 'yes'){
+        return 'in collection'
+    } else{
+        return ''
+    }
+}
+
+//materialSample-preservationType
+//pulldata("@javascript", "voucherScripts.js", "matSampPresType", ${<tissueSample>})
+function matSampPresType(tissueSample){
+    if (tissueSample == 'yes'){
+        return 'dessicated'
+    } else{
+        return ''
+    }
+}
+
+//materialSample-materialSampleID
+//pulldata("@javascript", "voucherScripts.js", "matSampID", ${<tissueMaterialSampleID>})
+function matSampID(tissueMaterialSampleID){
+    if (tissueMaterialSampleID){
+        return tissueMaterialSampleID
+    } else{
+        return ''
+    }
+}
+
+
