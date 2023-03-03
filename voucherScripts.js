@@ -1,22 +1,22 @@
-//This script is used primarily to transform and concatenate user provided answers into strings that conform with the DarwinCore
+//This script is used primarily to transform and concatenate user provided answers into strings that conform with the DarwinCore and/or symbiota fields
 //pulldata commands are to be places in the 'calculation' column of the Survey123 XLSForm on the survey tab
 
 //convert an object into a string
-//pulldata("@javascript", "voucherScripts.js", "objToStr", ${<inObj>})
+//pulldata("@javascript", "voucherScripts.js", "objToStr", ${inObj})
 function objToStr(inObj) {
 	var str = inObj.toString()
     return str
 }
 
 //replace any underscores in a string with spaces
-//pulldata("@javascript", "voucherScripts.js", "findandreplace", ${<inStr>}, ${<findstr>}, ${<replacestr>})
+//pulldata("@javascript", "voucherScripts.js", "findandreplace", ${inStr}, ${findstr}, ${replacestr})
 function findandreplace(inStr, findstr, replacestr) {
     var inStrSt= inStr.toString()
          return inStrSt.split(findstr).join(replacestr);
 }
     
 //TERRAIN
-//pulldata("@javascript", "voucherScripts.js", "terrainAdmin", ${<terrain>}, ${<terrain_other>})
+//pulldata("@javascript", "voucherScripts.js", "terrainAdmin", ${terrain}, ${terrain_other})
 function terrainAdmin(terrain, terrain_other) {
     var terrainStr = terrain.toString()
     if (terrain && !terrain.includes('other')) {
@@ -32,7 +32,7 @@ function terrainAdmin(terrain, terrain_other) {
 }
 
 //SOIL
-//pulldata("@javascript", "voucherScripts.js", "soilAdmin", ${<soilTypes>}, ${<soil>})
+//pulldata("@javascript", "voucherScripts.js", "soilAdmin", ${soilTypes}, ${soil})
 function soilAdmin(soilTypes,soil) {
 	var soilTypesStr = soilTypes.toString()
 	var soilNotesStr = soil.toString()
@@ -47,7 +47,7 @@ function soilAdmin(soilTypes,soil) {
 }
 
 //FREQUENCY
-//pulldata("@javascript", "voucherScripts.js", "freqAdmin", ${<frequency>})
+//pulldata("@javascript", "voucherScripts.js", "freqAdmin", ${frequency})
 function freqAdmin(frequency){
     var freqStr = frequency.toString()
     if (frequency){
@@ -58,7 +58,7 @@ function freqAdmin(frequency){
 }
 
 //TISSUE SAMPLE for occurrenceRemarks
-//pulldata("@javascript", "voucherScripts.js", "tissueRemarks", ${<tissueSample>}, ${<tissueProvenance>})
+//pulldata("@javascript", "voucherScripts.js", "tissueRemarks", ${tissueSample}, ${tissueProvenance})
 function tissueRemarks(tissueSample, tissueProvenance){
     if (tissueSample == 'yes' && tissueProvenance == 'sameIndividual'){
         return 'Tissue sample collected.'
@@ -72,13 +72,13 @@ function tissueRemarks(tissueSample, tissueProvenance){
 }
 
 //OCCURRENCE REMARKS
-//pulldata("@javascript", "voucherScripts.js", "concatOccRem", ${<frequencyAdmin>}, ${<tissueSampleAdmin>}, ${<additionalRemarks>})
+//pulldata("@javascript", "voucherScripts.js", "concatOccRem", ${frequencyAdmin}, ${tissueSampleAdmin}, ${additionalRemarks})
 function concatOccRem(frequencyAdmin,tissueSampleAdmin,additionalRemarks){
         return `${frequencyAdmin} ${tissueSampleAdmin} ${additionalRemarks}`
 }
 
 //HABIT
-//pulldata("@javascript", "voucherScripts.js", "habitAdmin", ${<habit>}, ${<habit_other>})
+//pulldata("@javascript", "voucherScripts.js", "habitAdmin", ${habit}, ${habit_other})
 function habitAdmin(habit, habit_other){
     var habitStr = habit.toString()
     if (habit && !habit.includes('other')) {
@@ -95,7 +95,7 @@ function habitAdmin(habit, habit_other){
 
 
 //GRAMINOID HABIT
-//pulldata("@javascript", "voucherScripts.js", "gramHabitAdmin", ${<graminoid>})
+//pulldata("@javascript", "voucherScripts.js", "gramHabitAdmin", ${graminoid})
 function gramHabitAdmin(graminoid){
     if (graminoid){
         return `Graminoid habit: ${graminoid}.`
@@ -105,7 +105,7 @@ function gramHabitAdmin(graminoid){
 }
 
 //LIFE CYCLE HABIT
-//pulldata("@javascript", "voucherScripts.js", "lifeCycleAdmin", ${<lifeCycleHabit>})
+//pulldata("@javascript", "voucherScripts.js", "lifeCycleAdmin", ${lifeCycleHabit})
 function lifeCycleAdmin(lifeCycleHabit){
     if (lifeCycleHabit){
         return `Life cycle habit: ${lifeCycleHabit}.`
@@ -115,7 +115,7 @@ function lifeCycleAdmin(lifeCycleHabit){
 }
 
 //FLOWER COLOR
-//pulldata("@javascript", "voucherScripts.js", "flowerColorAdmin", ${<flowerColor>})
+//pulldata("@javascript", "voucherScripts.js", "flowerColorAdmin", ${flowerColor})
 function flowerColorAdmin(flowerColor){
     if (flowerColor){
         return `Flower color: ${flowerColor}.`
@@ -125,7 +125,7 @@ function flowerColorAdmin(flowerColor){
 }
 
 //HEIGHT IN CM
-//pulldata("@javascript", "voucherScripts.js", "heightAdmin", ${<heightInCentimeters>})
+//pulldata("@javascript", "voucherScripts.js", "heightAdmin", ${heightInCentimeters})
 function heightAdmin(heightInCentimeters){
     if (heightInCentimeters){
         return `Approximate height in centimeters: ${heightInCentimeters}.`
@@ -135,7 +135,7 @@ function heightAdmin(heightInCentimeters){
 }
 
 //ADDITIONAL DESCRIPTION
-//pulldata("@javascript", "voucherScripts.js", "addDescriptionAdmin", ${<additionalDescription>})
+//pulldata("@javascript", "voucherScripts.js", "addDescriptionAdmin", ${additionalDescription})
 function addDescriptionAdmin(additionalDescription){
     if (additionalDescription){
         return `Additional description: ${additionalDescription}.`
@@ -144,8 +144,18 @@ function addDescriptionAdmin(additionalDescription){
     }
 }
 
+//DESCRIPTION COLLATE
+//collates all description data into symbiota field 'description'/'verbatimRemarks'
+//pulldata("@javascript", "voucherScripts.js", "habitatCollate", ${habitAdmin}, ${gramHabitAdmin}, ${lifeHistHabitAdmin}, ${flowerColorAdmin}, ${heightInCmAdmin}, ${additionalDescriptionAdmin})
+function habitatCollate(habitAdmin,gramHabitAdmin,lifeHistHabitAdmin,flowerColorAdmin,heightInCmAdmin,additionalDescriptionAdmin){
+    var habitatString = `{habitAdmin},{gramHabitAdmin},{lifeHistHabitAdmin},{flowerColorAdmin},{heightInCmAdmin},{additionalDescriptionAdmin}`
+    return habitatString.replace(/  /g,' ')
+}
+
+
+
 //HABITAT TYPE
-//pulldata("@javascript", "voucherScripts.js", "habitatTypeAdmin", ${<habitat_specific>})
+//pulldata("@javascript", "voucherScripts.js", "habitatTypeAdmin", ${habitat_specific})
 function habitatTypeAdmin(habitat_specific){
     var habitatStr = habitat_specific.toString()
     habitatStr = habitatStr.replace(/_rm/g,'').replace(/_wpc/g,'').replace(/_epf/g,'').replace(/_/g," ")
@@ -156,7 +166,7 @@ function habitatTypeAdmin(habitat_specific){
 
 
 //MICROHABITAT
-//pulldata("@javascript", "voucherScripts.js", "microHabitatAdmin", ${<microhabitat>})
+//pulldata("@javascript", "voucherScripts.js", "microHabitatAdmin", ${microhabitat})
 function microHabitatAdmin(microhabitat){
     if (microhabitat){
         return `Area immediately surrounding specimen: ${microhabitat}.`
@@ -166,7 +176,7 @@ function microHabitatAdmin(microhabitat){
 }
 
 //LANDUSE/DISTURBANCES
-//pulldata("@javascript", "voucherScripts.js", "disturbancesAdmin", ${<disturbance>}, ${<disturbance_other>})
+//pulldata("@javascript", "voucherScripts.js", "disturbancesAdmin", ${disturbance}, ${disturbance_other})
 function disturbancesAdmin(disturbance,disturbance_other){
     var disturbanceStr = disturbance.toString()
     if (disturbance && !disturbance.includes('other')) {
@@ -182,7 +192,7 @@ function disturbancesAdmin(disturbance,disturbance_other){
 }
 
 //SLOPE
-//pulldata("@javascript", "voucherScripts.js", "slopeAdmin", ${<slope>})
+//pulldata("@javascript", "voucherScripts.js", "slopeAdmin", ${slope})
 function slopeAdmin(slope){
     if (slope) {
         return `Estimated slope in degrees: ${slope}.`
@@ -192,7 +202,7 @@ function slopeAdmin(slope){
 }
 
 //ASPECT
-//pulldata("@javascript", "voucherScripts.js", "aspectAdmin", ${<aspect>})
+//pulldata("@javascript", "voucherScripts.js", "aspectAdmin", ${aspect})
 function aspectAdmin(aspect){
     if (aspect) {
         return `Slope aspect: ${aspect}.`
@@ -204,6 +214,7 @@ function aspectAdmin(aspect){
 
 //HABITAT COLLATE
 //collates all habitat descriptors into DwC field 'habitat'
+//pulldata("@javascript", "voucherScripts.js", "habitatCollate", ${habitatTypeAdmin}, ${disturbancesAdmin}, ${terrainAdmin}, ${microHabitatAdmin}, ${soilAdmin}, ${slopeAdmin}, ${aspectAdmin})
 function habitatCollate(habitatTypeAdmin,disturbancesAdmin,terrainAdmin,microHabitatAdmin,soilAdmin,slopeAdmin,aspectAdmin){
     var habitatString = `${habitatTypeAdmin} ${disturbancesAdmin} ${terrainAdmin} ${microHabitatAdmin} ${soilAdmin} ${slopeAdmin} ${aspectAdmin}`
     return habitatString.replace(/  /g,' ')
@@ -215,7 +226,7 @@ function habitatCollate(habitatTypeAdmin,disturbancesAdmin,terrainAdmin,microHab
 //MATERIAL SAMPLE for symbiota
 
 //materialSample-sampleType
-//pulldata("@javascript", "voucherScripts.js", "matSamType", ${<tissueSample>})
+//pulldata("@javascript", "voucherScripts.js", "matSamType", ${tissueSample})
 function matSampType(tissueSample){
     if (tissueSample == 'yes'){
         return 'tissue'
@@ -226,7 +237,7 @@ function matSampType(tissueSample){
 
 
 //materialSample-disposition
-//pulldata("@javascript", "voucherScripts.js", "matSampDisposition", ${<tissueSample>})
+//pulldata("@javascript", "voucherScripts.js", "matSampDisposition", ${tissueSample})
 function matSampDisposition(tissueSample){
     if (tissueSample == 'yes'){
         return 'in collection'
@@ -236,7 +247,7 @@ function matSampDisposition(tissueSample){
 }
 
 //materialSample-preservationType
-//pulldata("@javascript", "voucherScripts.js", "matSampPresType", ${<tissueSample>})
+//pulldata("@javascript", "voucherScripts.js", "matSampPresType", ${tissueSample})
 function matSampPresType(tissueSample){
     if (tissueSample == 'yes'){
         return 'dessicated'
@@ -246,7 +257,7 @@ function matSampPresType(tissueSample){
 }
 
 //materialSample-materialSampleID
-//pulldata("@javascript", "voucherScripts.js", "matSampID", ${<tissueMaterialSampleID>})
+//pulldata("@javascript", "voucherScripts.js", "matSampID", ${tissueMaterialSampleID})
 function matSampID(tissueMaterialSampleID){
     if (tissueMaterialSampleID){
         return tissueMaterialSampleID
@@ -256,3 +267,31 @@ function matSampID(tissueMaterialSampleID){
 }
 
 
+//DYNAMIC PROPERTIES
+//pulldata("@javascript", "voucherScripts.js", "dynamicPropertiesAdmin", ${habit}, ${graminoid}, ${lifeCycleHabit}, ${flowerColor}, ${heightInCentimeters}, ${additionalDescription})
+function dynamicPropertiesAdmin(habit,graminoid,lifeCycleHabit,flowerColor,heightInCentimeters,additionalDescription){
+    var dynaP = []
+    if (habit){
+        dynaP.push(`"habit":"${habit}"`)
+    }
+    if (graminoid){
+        dynaP.push(`"graminoidHabit":"${graminoid}"`)
+    }
+    if (lifeCycleHabit){
+        dynaP.push(`"lifeCycleHabit":"${lifeCycleHabit}"`)
+    }
+    if (flowerColor){
+        dynaP.push(`"flowerColor":"${flowerColor}"`)
+    }
+    if (heightInCentimeters){
+        dynaP.push(`"heightInCentimeters":${heightInCentimeters}`)
+    }
+    if (additionalDescription){
+        dynaP.push(`"additionalDescription":"${additionalDescription}"`)
+    }
+    if (dynaP.length > 0){
+        return `{${dynaP}}`
+    } else {
+        return ''
+    }
+}
