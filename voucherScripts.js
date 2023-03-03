@@ -295,3 +295,13 @@ function dynamicPropertiesAdmin(habit,graminoid,lifeCycleHabit,flowerColor,heigh
         return ''
     }
 }
+
+
+//ASSOCIATED TAXA
+function associatedTaxaAdmin(associatedTaxaList,host){
+    if (host){
+        return `${associatedTaxaList}, host: ${host}`
+    } else {
+        return associatedTaxaList
+    }
+}
