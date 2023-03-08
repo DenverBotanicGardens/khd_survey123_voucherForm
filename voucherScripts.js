@@ -146,10 +146,10 @@ function addDescriptionAdmin(additionalDescription){
 
 //DESCRIPTION COLLATE
 //collates all description data into symbiota field 'description'/'verbatimRemarks'
-//pulldata("@javascript", "voucherScripts.js", "habitatCollate", ${habitAdmin}, ${gramHabitAdmin}, ${lifeHistHabitAdmin}, ${flowerColorAdmin}, ${heightInCmAdmin}, ${additionalDescriptionAdmin})
-function habitatCollate(habitAdmin,gramHabitAdmin,lifeHistHabitAdmin,flowerColorAdmin,heightInCmAdmin,additionalDescriptionAdmin){
-    var habitatString = `{habitAdmin},{gramHabitAdmin},{lifeHistHabitAdmin},{flowerColorAdmin},{heightInCmAdmin},{additionalDescriptionAdmin}`
-    return habitatString.replace(/  /g,' ')
+//pulldata("@javascript", "voucherScripts.js", "descriptionCollate", ${habitAdmin}, ${gramHabitAdmin}, ${lifeHistHabitAdmin}, ${flowerColorAdmin}, ${heightInCmAdmin}, ${additionalDescriptionAdmin})
+function descriptionCollate(habitAdmin,gramHabitAdmin,lifeHistHabitAdmin,flowerColorAdmin,heightInCmAdmin,additionalDescriptionAdmin){
+    var descriptionString = `{habitAdmin},{gramHabitAdmin},{lifeHistHabitAdmin},{flowerColorAdmin},{heightInCmAdmin},{additionalDescriptionAdmin}`
+    return descriptionString.replace(/  /g,' ')
 }
 
 
