@@ -228,8 +228,9 @@ function habitatCollate(habitatTypeAdmin,disturbancesAdmin,terrainAdmin,microHab
 //materialSample-sampleType
 //pulldata("@javascript", "voucherScripts.js", "matSamType", ${tissueSample})
 function matSampType(tissueSample){
+    var tissue = 'tissue'
     if (tissueSample == 'yes'){
-        return 'tissue'
+        return tissue
     } else{
         return ''
     }
@@ -298,6 +299,7 @@ function dynamicPropertiesAdmin(habit,graminoid,lifeCycleHabit,flowerColor,heigh
 
 
 //ASSOCIATED TAXA
+//pulldata("@javascript", "voucherScripts.js", "associatedTaxaAdmin", ${associatedTaxaList}, ${host})
 function associatedTaxaAdmin(associatedTaxaList,host){
     if (host){
         return `${associatedTaxaList}, host: ${host}`
