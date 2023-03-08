@@ -217,7 +217,11 @@ function aspectAdmin(aspect){
 //pulldata("@javascript", "voucherScripts.js", "habitatCollate", ${habitatTypeAdmin}, ${disturbancesAdmin}, ${terrainAdmin}, ${microHabitatAdmin}, ${soilAdmin}, ${slopeAdmin}, ${aspectAdmin})
 function habitatCollate(habitatTypeAdmin,disturbancesAdmin,terrainAdmin,microHabitatAdmin,soilAdmin,slopeAdmin,aspectAdmin){
     var habitatString = `${habitatTypeAdmin} ${disturbancesAdmin} ${terrainAdmin} ${microHabitatAdmin} ${soilAdmin} ${slopeAdmin} ${aspectAdmin}`
-    return habitatString.replace(/  /g,' ')
+    if (habitatString.length > 0){
+        return habitatString.replace(/  /g,' ')
+    } else {
+        return ''
+    }
 }
 
 
@@ -228,9 +232,8 @@ function habitatCollate(habitatTypeAdmin,disturbancesAdmin,terrainAdmin,microHab
 //materialSample-sampleType
 //pulldata("@javascript", "voucherScripts.js", "matSamType", ${tissueSample})
 function matSampType(tissueSample){
-    var tissue = 'tissue'
     if (tissueSample == 'yes'){
-        return tissue
+        return 'tissue'
     } else{
         return ''
     }
